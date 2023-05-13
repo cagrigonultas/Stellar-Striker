@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space</title>
     <style>
-        canvas {
+        canvas {  /* Canvas öğesinin rengi konumu ve çerçevesinin niteliklerini belirleme */
             border: 1px solid #d3d3d3;
             background-color: #f1f1f1f1;
             position: absolute;
@@ -18,28 +18,28 @@
     </style>
 </head>
 
-<body onload="startGame()">
+<body onload="startGame()">  <!-- kodun body bölümü çalıştığı anda fonskiyonun devreye girmesini sağlama -->
     <script>
         var myGamePiece;
         var myEnemys = [];
         var myEnemys2 = [];
         var myScore;
-        var myBackground;
+        var myBackground;    // oyun için gerekli olan parçaların (düşman arkaplan vs.) tanımlanması
         var mySound;
         var mySound2;
         var myMusic;
         var myFire = [];
         var myLine;
         function startGame() {
-            myGameArea.start();
-            myGamePiece = new component(70, 70, "uzay.png", 10, 350, "image");
+            myGameArea.start();  // myGameArea yapısının içine erişerek oyunu başlatan komut
+            myGamePiece = new component(70, 70, "uzay.png", 10, 350, "image");     
             myBackground = new component(1080, 670, "sbcg.png", 0, 0, "background");
             myScore = new component("30px", "Consolas", "white", 840, 40, "text");
-            mySound = new sound("crash2.mp3");
+            mySound = new sound("crash2.mp3");                                           // oyunu oluşturan öğelerin niteliklerinin component yapısına verilerek oluşturulması
             mySound2 = new sound("crash2.mp3");
             myMusic = new sound("musicggg.mp3");
-            myMusic.lowerVolume();
-            myMusic.play();
+            myMusic.lowerVolume();  // arkaplan müziğinin rahatsız etmemesi için kısılması
+            myMusic.play();         // arkaplan müziğinin başlatılması
             myLine = new component(5, 670, "red", 90, 0);
 
         }
@@ -48,43 +48,43 @@
             canvas: document.createElement("canvas"),
             start: function () {
                 this.canvas.width = 1080;
-                this.canvas.height = 670;
-                this.context = this.canvas.getContext("2d");
-                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                this.frameNo = 0;
-                this.interval = setInterval(updateGameArea, 20);
-                this.interval = setInterval(fire, 50);
+                this.canvas.height = 670;                       // canvas niteliklerinin belirlenmesi
+                this.context = this.canvas.getContext("2d");    // canvas öğesinin bastırılması
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);    // bir düğüm yapısı kullanarak canvası 0. node olarak tanımlama
+                this.frameNo = 0;   // oyun skoru için frame sayan sayacın tanımlanması
+                this.interval = setInterval(updateGameArea, 20);   
+                this.interval = setInterval(fire, 50);             // updateGameArea ve fire fonksiyonunu belirtilen milisaniyede bir çalıştırma
                 window.addEventListener('keydown', function (i) {
                     myGameArea.keys = (myGameArea.keys || []);
-                    myGameArea.keys[i.keyCode] = (i.type == "keydown");
+                    myGameArea.keys[i.keyCode] = (i.type == "keydown");  // klavye basışını dinleme
 
 
 
                 })
                 window.addEventListener('keyup', function (i) {
-                    myGameArea.keys[i.keyCode] = (i.type == "keydown");
+                    myGameArea.keys[i.keyCode] = (i.type == "keydown");  // klavye tuşunun bırakılmasını dinleme
 
                 })
             },
 
             clear: function () {
-                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);     // canvası 0,0 noktasından başlayarak temizleme
             },
             stop: function () {
-                clearInterval(this.interval);
+                clearInterval(this.interval);        // intervali durdurarak sayfadaki akışı durdurma (oyun pause gibi düşünülebilir.)
             }
         }
 
-        function component(width, height, color, x, y, type) {
+        function component(width, height, color, x, y, type) {   // çeşitli nitelikleri alarak oyun öğesi oluşturan fonksiyon
             this.type = type;
 
             if (type == "image" || type == "background") {
-                this.image = new Image();
+                this.image = new Image();                         // resim öğelerinin canvasda farklı ele alınması sebebiyle ayrı bir denetleyici oluşturma
                 this.image.src = color;
             }
             this.gamearea = myGameArea;
             this.width = width;
-            this.height = height;
+            this.height = height;             // verilen nitelikleri fonksiyonda kullanabilmek için aktarım.
             this.speedX = 0;
             this.speedY = 0;
             this.x = x;
@@ -95,7 +95,7 @@
                 if (this.type == "text") {
                     ctx.font = this.width + " " + this.height;
                     ctx.fillStyle = color;
-                    ctx.fillText(this.text, this.x, this.y);
+                    ctx.fillText(this.text, this.x, this.y);                      // diğer denetleyiciler ve canvasa öğe bastırma işlemleri
                 } else if (type == "image" || type == "background") {
                     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
                     if (type == "background") {
@@ -108,15 +108,15 @@
                 }
             }
 
-            this.newPos = function () {
+            this.newPos = function () {                // hareketli nesnelerin yeni pozisyonlarını koordinatlarına uygulama fonksiyonu
 
-                this.x += this.speedX;
+                this.x += this.speedX;          
                 this.y += this.speedY;
-                this.hitBottom();
+                this.hitBottom();                     // hareket ederken çerçevenin en üst veya altına çarpmayı denetleme
                 this.hitTop();
 
                 if (this.type == "background") {
-                    if (this.x == -(this.width)) {
+                    if (this.x == -(this.width)) {    // arkaplanın sürekli kaymasını sağlama
                         this.x = 0;
                     }
                 }
@@ -124,20 +124,20 @@
 
             }
 
-            this.hitBottom = function () {
+            this.hitBottom = function () {           // çerçevenin tabanına değdikten sonra daha aşağıya inmeyi önleme
                 var rockbottom = myGameArea.canvas.height - this.height;
-                if (this.y > rockbottom) {
+                if (this.y > rockbottom) {                               
                     this.y = rockbottom;
 
                 }
             }
-            this.hitTop = function () {
+            this.hitTop = function () {              // çerçevenin tavanına değdikten sonra daha yukarıya çıkmayı önleme
 
                 if (this.y < 0) {
                     this.y = 0;
                 }
             }
-            this.crashWith = function (otherobj) {
+            this.crashWith = function (otherobj) {      // çarpışma olayının bilgisayara açıklanması
 
                 var myleft = this.x;
                 var myright = this.x + (this.width);
@@ -147,9 +147,10 @@
                 var otherright = otherobj.x + (otherobj.width);
                 var othertop = otherobj.y;
                 var otherbottom = otherobj.y + (otherobj.height);
-                var crash = true;
+                var crash = true;   // her durum değerlendirilmeden önce çarpışma olmuş olarak değerlendirilir ve koşula tabi tutulur eğer koşul sağlanırsa çarpışmanın olmadığı ortaya çıkar
 
-                if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+                if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {   
+                    // nesnemin altı objemin üstünden yukardaysa vs. durumlarla çarpışmanın olmadığı durumu aramak                                                                                                     
                     crash = false;
 
                 }
@@ -158,22 +159,22 @@
 
         }
 
-        function updateGameArea() {
+        function updateGameArea() {     // oyun alanın güncellendiği kısım (çarpışma kontrolleri, ateş alan düşmanlar, oyun skoru için frame güncellemesi vs.)
             var x, y;
 
             for (var i = 0; i < myEnemys.length; i++) {
 
-                if (myLine.crashWith(myEnemys[i])) {
-                    mySound2.play();
-                    myMusic.stop();
-                    myGameArea.stop();
+                if (myLine.crashWith(myEnemys[i])) {  // 1. tip düşmanın çizgiyi geçip geçmediği kontrolü
+                    mySound2.play();     // çarpışma efekti
+                    myMusic.stop();      // arkaplan müziğinin durdurulması
+                    myGameArea.stop();   // oyun arenasının durdurulması
                     
                     return;
                 }
             }
 
-            for (var i = 0; i < myEnemys.length; i++) {
-                if (myGamePiece.crashWith(myEnemys[i])) {
+            for (var i = 0; i < myEnemys.length; i++) {       
+                if (myGamePiece.crashWith(myEnemys[i])) {       // 1. tip düşmanla çarpışma kontrolü
                     mySound.play();
                     myMusic.stop();
                     myGameArea.stop();
@@ -181,9 +182,9 @@
                     return;
                 }
             }
-            for (var i = 0; i < myEnemys2.length; i++) {
+            for (var i = 0; i < myEnemys2.length; i++) {                
 
-                if (myGamePiece.crashWith(myEnemys2[i])) {
+                if (myGamePiece.crashWith(myEnemys2[i])) {       // 2. tip düşmanla çarpışma kontrolü
 
                     mySound.play();
                     myMusic.stop();
@@ -193,7 +194,7 @@
                 }
             }
 
-            for (var i = 0; i < myEnemys2.length; i++) {
+            for (var i = 0; i < myEnemys2.length; i++) {   // 2. tip düşmanın çizgiyi geçip geçmediği kontrolü
                 if (myLine.crashWith(myEnemys2[i])) {
                     mySound2.play();
                     myMusic.stop();
@@ -208,7 +209,7 @@
                     if (myFire[i].crashWith(myEnemys[j])) {
                         myEnemys.splice(j, 1);
                         myFire.splice(i, 1);
-                    }
+                    }                                               // 1. ve 2. tip düşmanın vurulma kontrolü
                 }
             }
             for (var i = 0; i < myFire.length; i++) {
@@ -220,18 +221,18 @@
                 }
             }
 
-            myGameArea.clear();
+            myGameArea.clear();        // her update den sonra oyun alanı komple temizlenir
             myBackground.speedX = -1;
             myBackground.newPos();
             myBackground.update();
             myLine.update();
-            myGameArea.frameNo += 1;
+            myGameArea.frameNo += 1;    // oyun score için her updatede frame arttırılır.
 
-            if (myGameArea.frameNo == 1 || everyinterval(50)) {
+            if (myGameArea.frameNo == 1 || everyinterval(50)) {  // oyun yeni başladıysa ( frame 1 ise) veya everyintervalin true olduğu şartı sağlanıyorsa rastgele düşman oluştur
                 x = Math.floor(Math.random() * 1080 + 1080);
-                y = Math.floor(Math.random() * 500);
+                y = Math.floor(Math.random() * 500);             // rastgele sayı üretme
                 myEnemys.push(new component(70, 70, "enemy.png", x, y, "image",));
-                myEnemys2.push(new component(40, 40, "enemy2.png", x * 2, y * 1.5, "image"));
+                myEnemys2.push(new component(40, 40, "enemy2.png", x * 2, y * 1.5, "image"));  // düşman üretme
 
             }
 
@@ -239,7 +240,7 @@
             for (var i = 0; i < myEnemys.length; i++) {
                 myEnemys[i].x += -5;
                 myEnemys2[i].x += -6;
-                myEnemys[i].newPos();
+                myEnemys[i].newPos();         // düşman sayısı kadar olan döngüde düşmanların hızının belirlenmesi ve güncellenmesi
                 myEnemys2[i].newPos();
                 myEnemys[i].update();
                 myEnemys2[i].update();
@@ -254,7 +255,7 @@
             myGamePiece.update();
 
             myGamePiece.speedX = 0;
-            myGamePiece.speedY = 0;
+            myGamePiece.speedY = 0;        // kılavyeden tuşa basma kesildiği zaman uzay gemisinin durması için x ye y hızlarının sıfırlanması
 
             if (myGameArea.keys && myGameArea.keys[37]) {
                 myGamePiece.speedX = -5;
@@ -264,11 +265,11 @@
             if (myGameArea.keys && myGameArea.keys[39]) {
                 myGamePiece.speedX = 5;
                 myMusic.play();
-            }
+            }                                           // oluşturulan dizi sayesinde klavyeden basılan (veya basılı tutulan) tuşların algılanarak hız değerlerinin myGamePiece e verilmesi
 
             if (myGameArea.keys && myGameArea.keys[38]) {
                 myGamePiece.speedY = -5;
-                myMusic.play();
+                myMusic.play();         // web tarayıcıların çoğu oto müzik başlangıçlarına karşı olduğundan herhangi bir tuşa basıldığında arka plan müziğinin başlatılması
 
             }
 
@@ -280,48 +281,48 @@
 
         function everyinterval(n) {
             if ((myGameArea.frameNo / n) % 1 == 0) {
-                return true;
+                return true;                            //frame no nun verilen değere her tam bölünmesi durumunda true dönderen fonksiyon (rasgetele düşman spawn nında kullandık)
             }
             return false;
         }
 
-        function sound(src) {
+        function sound(src) {                        // ses dosyalarının yönetimi başlatılması durdulmasını yöneten fonksiyon
             this.sound = document.createElement("audio");
             this.sound.src = src;
             this.sound.setAttribute("preload", "auto");
             this.sound.setAttribute("controls", "none");
             this.sound.style.display = "none";
-            document.body.appendChild(this.sound);
+            document.body.appendChild(this.sound);   // oluşturduğumuz node a ses dosyasını ekleme
             this.play = function () {
                 this.sound.play();
             }
             this.stop = function () {
                 this.sound.pause();
             }
-            this.lowerVolume = function () {
+            this.lowerVolume = function () {         // sesi kısma
                 this.sound.volume = 0.51;
             }
         }
 
-        function fire() {
+        function fire() {                            // ateş mekaniği
             var fireSpeed = 15;
-            if (myGameArea.keys && myGameArea.keys[32]) {
+            if (myGameArea.keys && myGameArea.keys[32]) {    // space e basılması veya basılı tutulması durumu
 
-                var fireX = myGamePiece.x + myGamePiece.width - 15;
-                var fireY = myGamePiece.y + myGamePiece.height / 3;
-                myFire.push(new component(20, 20, "Selection.png", fireX, fireY, "image"));
+                var fireX = myGamePiece.x + myGamePiece.width - 15;    
+                var fireY = myGamePiece.y + myGamePiece.height / 3;              // fire öğesinin konumunun geminin ağzı olması için sürekli geminin koordinatlarını tutan fireX ve fireY
+                myFire.push(new component(20, 20, "Selection.png", fireX, fireY, "image"));  
             }
 
             for (var i = 0; i < myFire.length; i++) {
                 myFire[i].x += fireSpeed;
                 myFire[i].newPos();
-                myFire[i].update();
-                myMusic.play();
+                myFire[i].update();            // ateşin konumunu güncelleme
+                myMusic.play();             
             }
         }
     </script>
 
-    <div style="text-align:center;width:1080px;">
+    <div style="text-align:center;width:1080px;"> <!-- Bir div oluşturarak restart butonu ekleme sayfayı yenileme durumuna bağlama -->
         <button style = "background-color: aqua; width: 100px; height: 30px; border-radius: 10px; margin: 50px auto; position: absolute;" onclick="location.reload()">RESTART</button>
     </div>
 
