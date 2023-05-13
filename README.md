@@ -10,6 +10,9 @@ Ardından Download ZIP' e tıklıyoruz.
 ![Nasıl2](https://github.com/cagrigonultas/Stellar-Striker/assets/91600415/5f9a1ed5-c017-4148-af47-50d8a0355c7d)
 
 # Projeyi nasıl çalıştıracağız?
+Öncelikle oyunu şu linkten direkt oynayabilirsiniz: http://stellarstriker.online/
+
+Projeyi indirip çaılştırmak için:
 Rar dosyasındaki belgeleri bir klasöre çıkartın. (rar kalösrüne sağ tıklayarak klasöre çıkart diyebilirsiniz.)
 
 Artık klasörünüzün içindeki Stellar Striker klasörüne girerek ordan Stellar Striker.html dosyasını çalıştırdığınızda tarayıcınızdan oyunu oynamaya başlayabilirsiniz.
