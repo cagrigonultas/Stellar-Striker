@@ -15,7 +15,7 @@ Ardından Download ZIP' e tıklıyoruz.
 Projeyi indirip çaılştırmak için:
 Rar dosyasındaki belgeleri bir klasöre çıkartın. (rar kalösrüne sağ tıklayarak klasöre çıkart diyebilirsiniz.)
 
-Artık klasörünüzün içindeki Stellar Striker klasörüne girerek ordan Stellar Striker.html dosyasını çalıştırdığınızda tarayıcınızdan oyunu oynamaya başlayabilirsiniz.
+Artık klasörünüzün içindeki Stellar Striker klasörüne girerek ordan index.html dosyasını çalıştırdığınızda tarayıcınızdan oyunu oynamaya başlayabilirsiniz.
 
 # Projeyi geliştirirken hangi teknolojilerden yararlanıldı?
 
