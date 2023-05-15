@@ -17,6 +17,10 @@ Rar dosyasındaki belgeleri bir klasöre çıkartın. (rar kalösrüne sağ tık
 
 Artık klasörünüzün içindeki Stellar Striker klasörüne girerek ordan index.html dosyasını çalıştırdığınızda tarayıcınızdan oyunu oynamaya başlayabilirsiniz.
 
+# Projenin youtube linki
+
+https://youtu.be/Dvxq6LreIIc
+
 # Projeyi geliştirirken hangi teknolojilerden yararlanıldı?
 
 * Visual Studio Code programındaki eklentilerden.
