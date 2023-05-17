@@ -3,11 +3,13 @@
 # Projeyi nasıl indireceğiz?
 Öncelikle yeşil < > Code butonuna tıklıyoruz.
 
-![Nasıl1](https://github.com/cagrigonultas/Stellar-Striker/assets/91600415/36471306-f53d-4e68-af38-832542c6824b)
+![Nasıl1](https://github.com/cagrigonultas/Stellar-Striker/assets/91600415/47ff91ff-8cd5-4141-a349-764724dcf5bb)
+
 
 Ardından Download ZIP' e tıklıyoruz.
 
-![Nasıl2](https://github.com/cagrigonultas/Stellar-Striker/assets/91600415/5f9a1ed5-c017-4148-af47-50d8a0355c7d)
+![Nasıl2](https://github.com/cagrigonultas/Stellar-Striker/assets/91600415/847f5c8d-36be-4429-b4f6-5c09628d65a2)
+
 
 # Projeyi nasıl çalıştıracağız?
 Öncelikle oyunu şu linkten direkt oynayabilirsiniz: http://stellarstriker.online/
